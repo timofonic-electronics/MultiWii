@@ -2,7 +2,8 @@
 #define MULTIWII_H_
 
 #define  VERSION        241
-#define  NAVI_VERSION   7     //This allow sync with GUI
+//This allow sync with GUI
+#define  NAVI_VERSION   7
 #include "types.h"
 #include "Alarms.h"
 
@@ -54,7 +55,8 @@ extern int16_t angle[2];
 
 #if BARO
   extern int32_t baroPressure;
-  extern int16_t baroTemperature; // temp in 0.01 deg
+  // temp in 0.01 deg
+  extern int16_t baroTemperature;
   extern int32_t baroPressureSum;
 #endif
 
@@ -73,11 +75,16 @@ extern int16_t lookupPitchRollRC[5];
 extern uint16_t lookupThrottleRC[11];
 
 #if defined(POWERMETER) || ( defined(LOG_VALUES) && (LOG_VALUES >= 3) )
-  #define PMOTOR_SUM 8                     // index into pMeter[] for sum
-  extern uint32_t pMeter[PMOTOR_SUM + 1];  // we use [0:7] for eight motors,one extra for sum
-  extern uint8_t pMeterV;                  // dummy to satisfy the paramStruct logic in ConfigurationLoop()
-  extern uint32_t pAlarm;                  // we scale the eeprom value from [0:255] to this value we can directly compare to the sum in pMeter[6]
-  extern uint16_t powerValue;              // last known current
+// index into pMeter[] for sum
+#define PMOTOR_SUM 8
+// we use [0:7] for eight motors,one extra for sum
+extern uint32_t pMeter[PMOTOR_SUM + 1];
+// dummy to satisfy the paramStruct logic in ConfigurationLoop()
+extern uint8_t pMeterV;
+// we scale the eeprom value from [0:255] to this value we can directly compare to the sum in pMeter[6]
+extern uint32_t pAlarm;
+// last known current
+extern uint16_t powerValue;
 #endif
 
 #if defined(LCD_TELEMETRY)
@@ -90,10 +97,14 @@ extern uint16_t lookupThrottleRC[11];
 #endif
 
 #if defined(LOG_VALUES) || defined(LCD_TELEMETRY)
-  extern uint16_t cycleTimeMax;       // highest ever cycle timen
-  extern uint16_t cycleTimeMin;       // lowest ever cycle timen
-  extern int32_t  BAROaltMax;         // maximum value
-  extern uint16_t GPS_speedMax;       // maximum speed from gps
+  // highest ever cycle timen
+  extern uint16_t cycleTimeMax;
+  // lowest ever cycle timen
+  extern uint16_t cycleTimeMin;
+  // maximum value
+  extern int32_t  BAROaltMax;
+  // maximum speed from gps
+  extern uint16_t GPS_speedMax;
   extern uint16_t powerValueMaxMAH;
   extern uint16_t wattsMax;
 #endif
@@ -106,32 +117,50 @@ extern uint16_t lookupThrottleRC[11];
 
 extern gps_conf_struct GPS_conf;
 
-extern int16_t  GPS_angle[2];           // the angles that must be applied for GPS correction
+// the angles that must be applied for GPS correction
+extern int16_t  GPS_angle[2];
 extern int32_t  GPS_coord[2];
 extern int32_t  GPS_home[2];
 extern int32_t  GPS_hold[2];
 extern int32_t  GPS_prev[2];
-extern int32_t  GPS_poi[2];             // Coordinates of the current poi
-extern int32_t  GPS_directionToPoi;     // direction to the actual poi (used to set heading to poi)
+// Coordinates of the current poi
+extern int32_t  GPS_poi[2];
+// direction to the actual poi (used to set heading to poi)
+extern int32_t  GPS_directionToPoi;
 extern uint8_t  GPS_numSat;
-extern uint16_t GPS_distanceToHome;     // distance to home  - unit: meter
-extern int16_t  GPS_directionToHome;    // direction to home - unit: degree
-extern uint16_t GPS_altitude;           // GPS altitude      - unit: meter
-extern uint16_t GPS_speed;              // GPS speed         - unit: cm/s
-extern uint8_t  GPS_update;             // a binary toogle to distinct a GPS position update
-extern uint16_t GPS_ground_course;      //                   - unit: degree*10
+// distance to home  - unit: meter
+extern uint16_t GPS_distanceToHome;
+// direction to home - unit: degree
+extern int16_t  GPS_directionToHome;
+// GPS altitude      - unit: meter
+extern uint16_t GPS_altitude;
+// GPS speed         - unit: cm/s
+extern uint16_t GPS_speed;
+// a binary toogle to distinct a GPS position update
+extern uint8_t  GPS_update;
+// - unit: degree*10
+extern uint16_t GPS_ground_course;
 extern uint32_t GPS_time;
 
-extern uint8_t  GPS_mode;               // contains the current selected gps flight mode
+// contains the current selected gps flight mode
+extern uint8_t  GPS_mode;
 
-extern uint8_t NAV_error;                 //Last error situation of the nav engine
-extern uint8_t NAV_state;                 //State of the nav engine
-extern uint8_t GPS_saved_mission_state;   //The mission state saved when poshold invoked during mission
-extern uint8_t prv_gps_modes;             //GPS_checkbox items packed into 1 byte for checking GPS mode changes
-extern uint32_t nav_timer_stop;           //common timer used in navigation (contains the desired stop time in millis()
-extern uint16_t nav_hold_time;            //time in seconds to hold position
-extern uint8_t NAV_paused_at;             //This contains the mission step where poshold paused the runing mission.
-extern uint8_t next_step;                 //The mission step which is upcoming it equals with the mission_step stored in EEPROM
+// Last error situation of the nav engine
+extern uint8_t NAV_error;
+//State of the nav engine
+extern uint8_t NAV_state;
+//The mission state saved when poshold invoked during mission
+extern uint8_t GPS_saved_mission_state;
+//GPS_checkbox items packed into 1 byte for checking GPS mode changes
+extern uint8_t prv_gps_modes;
+//common timer used in navigation (contains the desired stop time in millis()
+extern uint32_t nav_timer_stop;
+//time in seconds to hold position
+extern uint16_t nav_hold_time;
+//This contains the mission step where poshold paused the runing mission.
+extern uint8_t NAV_paused_at;
+//The mission step which is upcoming it equals with the mission_step stored in EEPROM
+extern uint8_t next_step;
 
 //Altitude control state
 #define ASCENDING           1
@@ -140,7 +169,7 @@ extern uint8_t next_step;                 //The mission step which is upcoming i
 
 // The orginal altitude used as base our new altitude during nav
 extern int32_t original_altitude;
-//This is the target what we want to reach 
+//This is the target what we want to reach
 extern int32_t target_altitude;
 //This is the interim value which is feeded into the althold controller
 extern int32_t alt_to_hold;
@@ -148,8 +177,10 @@ extern int32_t alt_to_hold;
 extern uint32_t alt_change_timer;
 extern int8_t   alt_change_flag;
 extern uint32_t alt_change;
-extern int16_t  jump_times;             //How many loops do we have to do (alt/100 from mission step) -10 means not used jet, -1 unlimited
-extern uint8_t  land_detect;            //land detector variable
+//How many loops do we have to do (alt/100 from mission step) -10 means not used jet, -1 unlimited
+extern int16_t  jump_times;
+//land detector variable
+extern uint8_t  land_detect;
 
 
 // ************************
@@ -157,23 +188,37 @@ extern uint8_t  land_detect;            //land detector variable
 // ************************
 extern mission_step_struct mission_step;
 
-//possible action codes for a mission step 
-#define MISSION_WAYPOINT      1   //Set waypoint
-#define MISSION_HOLD_UNLIM    2   //Poshold unlimited
-#define MISSION_HOLD_TIME     3   //Hold for a predetermined time
-#define MISSION_RTH           4   //Return to HOME
-#define MISSION_SET_POI       5   //Set POINT of interest
-#define MISSION_JUMP          6   //Jump to the given step (#times)
-#define MISSION_SET_HEADING   7   //Set heading to a given orientation (parameter 1 is the waym 0-359 degree
-#define MISSION_LAND          8   //Land at the given position
+//possible action codes for a mission step
+//Set waypoint
+#define MISSION_WAYPOINT      1
+//Poshold unlimited
+#define MISSION_HOLD_UNLIM    2
+//Hold for a predetermined time
+#define MISSION_HOLD_TIME     3
+//Return to HOME
+#define MISSION_RTH           4
+//Set POINT of interest
+#define MISSION_SET_POI       5
+//Jump to the given step (#times)
+#define MISSION_JUMP          6
+//Set heading to a given orientation (parameter 1 is the waym 0-359 degree
+#define MISSION_SET_HEADING   7
+//Land at the given position
+#define MISSION_LAND          8
 
 
-#define MISSION_FLAG_END         0xA5   //Flags that this is the last step
-#define MISSION_FLAG_CRC_ERROR   0xFE   //Returned WP had an EEPROM CRC error
-#define MISSION_FLAG_HOME        0x01   //Returned WP is the home position
-#define MISSION_FLAG_HOLD        0x02   //Returned WP is the hold position
-#define MISSION_FLAG_DO_LAND     0x20   //Land when reached desired point (used in RTH)
-#define MISSION_FLAG_NAV_IN_PROG 0xff   //Navigation is in progress, returned wp is home
+//Flags that this is the last step
+#define MISSION_FLAG_END         0xA5
+//Returned WP had an EEPROM CRC error
+#define MISSION_FLAG_CRC_ERROR   0xFE
+//Returned WP is the home position
+#define MISSION_FLAG_HOME        0x01
+//Returned WP is the hold position
+#define MISSION_FLAG_HOLD        0x02
+//Land when reached desired point (used in RTH)
+#define MISSION_FLAG_DO_LAND     0x20
+//Navigation is in progress, returned wp is home
+#define MISSION_FLAG_NAV_IN_PROG 0xff
 
 #define LAT  0
 #define LON  1
@@ -181,23 +226,29 @@ extern mission_step_struct mission_step;
 extern int16_t  nav[2];
 
 
-#endif 
+#endif
 
 // default POSHOLD control gains
 #define POSHOLD_P              .15
 #define POSHOLD_I              0.0
-#define POSHOLD_IMAX           20        // degrees
+// degrees
+#define POSHOLD_IMAX           20
 
 #define POSHOLD_RATE_P         3.4
-#define POSHOLD_RATE_I         0.14      // Wind control
-#define POSHOLD_RATE_D         0.053     // try 2 or 3 for POSHOLD_RATE 1
-#define POSHOLD_RATE_IMAX      20        // degrees
+// Wind control
+#define POSHOLD_RATE_I         0.14
+// try 2 or 3 for POSHOLD_RATE 1
+#define POSHOLD_RATE_D         0.053
+// degrees
+#define POSHOLD_RATE_IMAX      20
 
 // default Navigation PID gains
 #define NAV_P                  2.5
-#define NAV_I                  0.33      // Wind control
-#define NAV_D                  0.083      //
-#define NAV_IMAX               20        // degrees
+// Wind control
+#define NAV_I                  0.33
+#define NAV_D                  0.083
+// degrees
+#define NAV_IMAX               20
 
 
 // *************************************** end GPS common variables and defines ******************************************************************
@@ -207,7 +258,8 @@ extern volatile uint32_t spekTimeLast;
 extern uint8_t  spekFrameDone;
 
 #if defined(OPENLRSv2MULTI)
-extern uint8_t pot_P,pot_I; // OpenLRS onboard potentiometers for P and I trim or other usages
+// OpenLRS onboard potentiometers for P and I trim or other usages
+extern uint8_t pot_P,pot_I;
 #endif
 
 // **********************
@@ -232,4 +284,5 @@ extern uint16_t AccInflightCalibrationActive;
 
 void annexCode();
 void go_disarm();
-#endif /* MULTIWII_H_ */
+/* MULTIWII_H_ */
+#endif
