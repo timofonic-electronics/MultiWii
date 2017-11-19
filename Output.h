@@ -8,4 +8,5 @@ void mixTable();
 void writeServos();
 void writeMotors();
 
-#endif /* OUTPUT_H_ */
+/* OUTPUT_H_ */
+#endif
